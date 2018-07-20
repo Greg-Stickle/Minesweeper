@@ -1,0 +1,24 @@
+- A square indicates any of the units in the game of minesweeper
+that contains either a number, a blank("0") or a mine.
+- A game is won at the point when all squares that are not mines are
+clicked open
+- A game is lost when a square that a player clicks open contains a
+mine
+- A board is pregenerated
+- The first square clicked never contains a mine
+	> If it did contain a mine, the mine is moved to the top left
+	until it is placed in an empty square.
+- The square the cursor is over at the point of release of the lmb
+is the square that is opened.
+- A number represents the number of mines that exist in the eight
+squares touching the square that was opened
+	> If the square is a zero, all squares touching that square
+	are also opened.
+- Right clicking causes a flag to appear. Right clicking again removes
+the flag.
+- Chording. Double clicking on a number opens up the remaining squares
+that are not flagged. 
+- The number of mines in a board are predetermined
+	> 10 mines in an 8x8
+	> 40 mines in an 16x16
+	> 99 mines in an 16x30 
