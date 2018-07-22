@@ -22,3 +22,5 @@ that are not flagged.
 	> 10 mines in an 8x8
 	> 40 mines in an 16x16
 	> 99 mines in an 16x30 
+
+- When a tile is clicked and held. It is pressed. If the tile is changed, the new tile that the mouse hovers is also pressed until the mouse becomes depressed.
