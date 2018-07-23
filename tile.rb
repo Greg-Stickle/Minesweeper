@@ -31,7 +31,8 @@ class Tile
 		#Opened
 		when 2
 			if @number == 9
-				draw_opened_mine(@row,@column) 
+				draw_opened_mine(@row,@column)
+				
 			else
 				draw_opened_number(@row,@column,@number)
 			end

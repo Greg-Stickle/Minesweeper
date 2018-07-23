@@ -4,7 +4,7 @@ require_relative 'game'
 class Minesweeper < Gosu::Window
 
 	def initialize
-		super(400,400)
+		super(460,460)
 		self.caption = "Minesweeper"
 		@game = Game.new(self)
 	end
