@@ -14,7 +14,7 @@ class Minesweeper < Gosu::Window
 	end
 
 	def button_up(id)
-		if id == Gosu::MsLeft
+		if id == Gosu::MsLeft 
 			@game.handle_left_mouse_up(mouse_x, mouse_y)
 		elsif id == Gosu::MsRight
 			@game.handle_right_mouse_up(mouse_x, mouse_y)

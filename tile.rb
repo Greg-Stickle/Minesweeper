@@ -307,7 +307,7 @@ class Tile
 
 	def draw_opened_mine(row,column)
 		#Draws Opened Square
-		c = Gosu::Color.argb(0xffA8A8A8)
+		c = Gosu::Color.argb(0xffFF0000)
 		x1 = 82 + column * 30
 		y1 = 82 + row * 30
 		x2 = x1 + 29
