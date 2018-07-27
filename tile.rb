@@ -1,15 +1,20 @@
 require 'gosu'
 class Tile
 
-	attr_reader :row, :column, :number, :status
+	attr_reader :row, :column, :number, :status, :checked
 
-	def initialize(window, row, column, number)
+	def initialize(window, row, column, number, checked)
 		@@window ||= window
 		@row = row
 		@column = column
 		@number = number
+		@checked = checked
 		@status = 0
 		@font = Gosu::Font.new(24)
+	end
+
+	def setChecked(update)
+		@checked = update
 	end
 
 	def setNumber(number)

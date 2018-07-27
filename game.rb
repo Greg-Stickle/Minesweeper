@@ -5,11 +5,11 @@ class Game
 		@window = window
 		@tiles = []
 		@over = false
-
+		@stack = []
 		#Builds empty unopened board
 		(0..9).each do |row|
 			(0..9).each do |column|
-				@tiles.push Tile.new(@window, row, column, 0)
+				@tiles.push Tile.new(@window, row, column, 0, true)
 			end
 		end
 
@@ -22,6 +22,7 @@ class Game
 		(1..8).each do |row|
 			(1..8).each do |column|
 				giveNumber(row,column)
+				@tiles[row * 10 + column].setChecked(false)
 			end
 		end
 	end
@@ -35,18 +36,29 @@ class Game
 	end
 
 	def openTile(column, row)
-		return if row == 0 or row == 9 or column == 0 or column == 9
-		if @tiles[row * 10 + column].number == 0 
+		tile = @tiles[row * 10 + column]
+		return nil if column < 0 or column > 9 or row < 0 or row > 9
+		return if tile.status == 1
+
+		if tile.number == 9
+			openMines
+			@over = true
+		elsif tile.number != 0
+			tile.setStatus(2)
+		else
+			tile.setStatus(2) if tile.checked == false
+			tile.setChecked(true)
 			(-1..1).each do |rowManip|
 				(-1..1).each do |columnManip|
 					testRow = row + rowManip
 					testColumn = column + columnManip
-					@tiles[(testRow) * 10 + (testColumn)].setStatus(2)
-					openTile(testColumn, testRow) if @tiles[(testRow) * 10 + (testColumn)].number == 0
+					newTile = @tiles[testRow * 10 + testColumn]
+					puts "TestRow: #{testRow}"
+					puts "testColumn: #{testColumn}"  
+					newTile.setStatus(2) if newTile.status == 0
+					openTile(newTile.column, newTile.row) if newTile.number == 0 and newTile.checked == false and newTile.status == 2
 				end
 			end
-		else
-			return
 		end
 	end
 
@@ -62,17 +74,10 @@ class Game
 	end
 
 	def handle_left_mouse_up(x,y)
-		if @over == false
-			row = (y.to_i - 82) / 30
+		if @over == false #Gameover clause
+			row = (y.to_i - 82) / 30 
 			column = (x.to_i - 82) / 30
-			@selected_tile = get_tile(column, row)
-			openTile(column,row) if @selected_tile.number == 0 and @selected_tile.status == 0
-			return if @selected_tile.status == 1
-			@selected_tile.setStatus(2)
-			if @selected_tile.number == 9
-				openMines
-				@over = true
-			end
+			openTile(column,row)
 		end
 	end
 
