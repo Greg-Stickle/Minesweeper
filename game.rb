@@ -1,10 +1,14 @@
 require_relative 'tile'
 
 class Game
+
+	attr_reader :over, :won
 	def initialize(window)
 		@window = window
+		@first_move = true
 		@tiles = []
 		@over = false
+		@won = false
 		@stack = []
 		#Builds empty unopened board
 		(0..9).each do |row|
@@ -19,6 +23,10 @@ class Game
 			@tiles[randRow * 10 + randColumn].setNumber(9) if @tiles[randRow * 10 + randColumn].number != 9
 		end
 
+		numberBoard
+	end
+
+	def numberBoard()
 		(1..8).each do |row|
 			(1..8).each do |column|
 				giveNumber(row,column)
@@ -35,16 +43,41 @@ class Game
 		end
 	end
 
+	def checkWin()
+		count = 0
+		(1..8).each do |row|
+			(1..8).each do |column|
+				index = row * 10 + column
+				count += 1 if @tiles[index].status == 1 and @tiles[index].number == 9
+			end
+		end
+		@won = true if count == 10
+	end
+
 	def openTile(column, row)
 		tile = @tiles[row * 10 + column]
 		return nil if column < 0 or column > 9 or row < 0 or row > 9
 		return if tile.status == 1
 
-		if tile.number == 9
+		if tile.number == 9 && @first_move == false
 			openMines
 			@over = true
+		elsif tile.number == 9 && @first_move == true
+			set = false
+			index = 11
+			until set
+				if @tiles[index].number != 9
+					@tiles[index].setNumber(9)
+					tile.setNumber(0)
+					numberBoard 
+					set = true
+					@first_move = false
+				end
+				index += 1
+			end
 		elsif tile.number != 0
 			tile.setStatus(2)
+			@first_move = false
 		else
 			tile.setStatus(2) if tile.checked == false
 			tile.setChecked(true)
@@ -52,14 +85,14 @@ class Game
 				(-1..1).each do |columnManip|
 					testRow = row + rowManip
 					testColumn = column + columnManip
-					newTile = @tiles[testRow * 10 + testColumn]
-					puts "TestRow: #{testRow}"
-					puts "testColumn: #{testColumn}"  
+					newTile = @tiles[testRow * 10 + testColumn] 
 					newTile.setStatus(2) if newTile.status == 0
 					openTile(newTile.column, newTile.row) if newTile.number == 0 and newTile.checked == false and newTile.status == 2
 				end
 			end
+			@first_move = false
 		end
+		checkWin
 	end
 
 	def giveNumber(row,column)
@@ -79,6 +112,10 @@ class Game
 			column = (x.to_i - 82) / 30
 			openTile(column,row)
 		end
+	end
+
+	def handle_left_mouse_down(x,y)
+
 	end
 
 	def handle_right_mouse_up(x,y)
