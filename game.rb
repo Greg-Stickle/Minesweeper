@@ -2,7 +2,7 @@ require_relative 'tile'
 
 class Game
 
-	attr_reader :over, :won
+	attr_reader :over, :won, :first_move, :flags
 	def initialize(window)
 		@window = window
 		@first_move = true
@@ -10,6 +10,7 @@ class Game
 		@over = false
 		@won = false
 		@stack = []
+		@flags = 10
 		#Builds empty unopened board
 		(0..9).each do |row|
 			(0..9).each do |column|
@@ -69,7 +70,8 @@ class Game
 				if @tiles[index].number != 9
 					@tiles[index].setNumber(9)
 					tile.setNumber(0)
-					numberBoard 
+					numberBoard
+					tile.setStatus(2) 
 					set = true
 					@first_move = false
 				end
@@ -114,10 +116,6 @@ class Game
 		end
 	end
 
-	def handle_left_mouse_down(x,y)
-
-	end
-
 	def handle_right_mouse_up(x,y)
 		row = (y.to_i - 82) / 30
 		column = (x.to_i - 82) / 30
@@ -125,8 +123,10 @@ class Game
 		return if @selected_tile.status == 2
 		if @selected_tile.status == 0
 			@selected_tile.setStatus(1)
+			@flags -= 1
 		else 
 			@selected_tile.setStatus(0)
+			@flags += 1
 		end
 	end
 

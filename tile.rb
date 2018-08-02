@@ -306,7 +306,25 @@ class Tile
 			x_center = x1 + 15
 			x_text = x_center - @font.text_width(number) / 2
 			y_text = y1 + 4
-			@font.draw("#{number}",x_text,y_text, 4)
+			case @number
+				when 1
+					@numColor = Gosu::Color.argb(0xff_071cbc)
+				when 2
+					@numColor = Gosu::Color.argb(0xff_009625)
+				when 3
+					@numColor = Gosu::Color.argb(0xff_e51a00)
+				when 4
+					@numColor = Gosu::Color.argb(0xff_9e01ba)
+				when 5
+					@numColor = Gosu::Color.argb(0xff_91013d)
+				when 6
+					@numColor = Gosu::Color.argb(0xff_01917b)
+				when 7
+					@numColor = Gosu::Color.argb(0xff_000000)
+				when 8
+					@numColor = Gosu::Color.argb(0xff_727272)
+			end
+			@font.draw("#{number}",x_text,y_text, 4, 1, 1, @numColor)
 		end
 	end
 
