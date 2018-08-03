@@ -5,6 +5,8 @@ class Game
 	attr_reader :over, :won, :first_move, :flags
 	def initialize(window)
 		@window = window
+		@buffer = (@window.width - 255) / 2
+		@image_buffer = 30
 		@first_move = true
 		@tiles = []
 		@over = false
@@ -110,15 +112,15 @@ class Game
 
 	def handle_left_mouse_up(x,y)
 		if @over == false #Gameover clause
-			row = (y.to_i - 82) / 30 
-			column = (x.to_i - 82) / 30
+			row = (y.to_i - @buffer - @image_buffer) / 30 
+			column = (x.to_i - @buffer) / 30
 			openTile(column,row)
 		end
 	end
 
 	def handle_right_mouse_up(x,y)
-		row = (y.to_i - 82) / 30
-		column = (x.to_i - 82) / 30
+		row = (y.to_i - @buffer - @image_buffer) / 30
+		column = (x.to_i - @buffer) / 30
 		@selected_tile = get_tile(column, row)
 		return if @selected_tile.status == 2
 		if @selected_tile.status == 0

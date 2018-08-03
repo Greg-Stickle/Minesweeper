@@ -5,6 +5,8 @@ class Tile
 
 	def initialize(window, row, column, number, checked)
 		@@window ||= window
+		@buffer = (window.width - 255) / 2
+		@image_buffer = 30
 		@row = row
 		@column = column
 		@number = number
@@ -47,8 +49,8 @@ class Tile
 	def draw_unopened(row, column)
 		#Horizontal White Rect (Long)
 		c = Gosu::Color.argb(0xff_ffffff)
-		x1 = 82 + column * 30
-		y1 = 82 + row * 30
+		x1 = @buffer + column * 30
+		y1 = @buffer + @image_buffer + row * 30
 		x2 = x1 + 29
 		y2 = y1
 		x3 = x2
@@ -59,8 +61,8 @@ class Tile
 
 		#Horizontal White Rect (Short)
 		c = Gosu::Color.argb(0xff_ffffff)
-		x1 = 82 + column * 30
-		y1 = 82 + row * 30
+		x1 = @buffer + column * 30
+		y1 = @buffer + @image_buffer + row * 30
 		x2 = x1 + 28
 		y2 = y1
 		x3 = x2
@@ -70,8 +72,8 @@ class Tile
 		@@window.draw_quad(x1, y1, c, x2, y2, c, x3, y3, c, x4, y4, c, 2)
 
 		#Vertical White Column (Long)
-		x1 = 82 + column * 30
-		y1 = 82 + row * 30
+		x1 = @buffer + column * 30
+		y1 = @buffer + @image_buffer + row * 30
 		x2 = x1 + 1
 		y2 = y1
 		x3 = x2
@@ -81,8 +83,8 @@ class Tile
 		@@window.draw_quad(x1, y1, c, x2, y2, c, x3, y3, c, x4, y4, c, 2)
 
 		#Vertical White Column (Short)
-		x1 = 83 + column * 30
-		y1 = 82 + row * 30
+		x1 = @buffer + 1 + column * 30
+		y1 = @buffer + @image_buffer + row * 30
 		x2 = x1 + 1
 		y2 = y1
 		x3 = x2
@@ -93,8 +95,8 @@ class Tile
 		
 		#Dark Grey Horizontal Rectangle (long)
 		c = Gosu::Color.argb(0xaa626567)
-		x1 = 83 + column * 30
-		y1 = 111 + row * 30
+		x1 = @buffer + column * 30
+		y1 = @buffer + @image_buffer + 29 + row * 30
 		#point = point + indent
 		x2 = x1 + 29
 		y2 = y1
@@ -105,8 +107,8 @@ class Tile
 		@@window.draw_quad(x1, y1, c, x2, y2, c, x3, y3, c, x4, y4, c, 2)
 
 		#Dark Grey Horizontal Rectangle (Short)
-		x1 = 84 + column * 30
-		y1 = 110 + row * 30
+		x1 = @buffer + 2 + column * 30
+		y1 = @buffer + @image_buffer + 28 + row * 30
 		#point = point + indent
 		x2 = x1 + 28
 		y2 = y1
@@ -117,8 +119,8 @@ class Tile
 		@@window.draw_quad(x1, y1, c, x2, y2, c, x3, y3, c, x4, y4, c, 2)
 
 		#Dark Grey Verticle Rectangle (Long)
-		x1 = 110 + column * 30
-		y1 = 82 + row * 30
+		x1 = @buffer + 28 + column * 30
+		y1 = @buffer + @image_buffer + row * 30
 		#point = point + indent
 		x2 = x1 + 1
 		y2 = y1
@@ -129,8 +131,8 @@ class Tile
 		@@window.draw_quad(x1, y1, c, x2, y2, c, x3, y3, c, x4, y4, c, 2)
 
 		#Dark Grey Horizontal Rectangle (Short)
-		x1 = 111 + column * 30
-		y1 = 83 + row * 30
+		x1 = @buffer + 29 + column * 30
+		y1 = @buffer + @image_buffer + 1 + row * 30
 		#point = point + indent
 		x2 = x1 + 2
 		y2 = y1
@@ -143,8 +145,8 @@ class Tile
 		#Center Light Grey Square
 		
 		c = Gosu::Color.argb(0xffA8A8A8)
-		x1 = 82 + column * 30
-		y1 = 82 + row * 30
+		x1 = @buffer + column * 30
+		y1 = @buffer + @image_buffer + row * 30
 		x2 = x1 + 28
 		y2 = y1
 		x3 = x2
@@ -158,8 +160,8 @@ class Tile
 		#Tile Code
 		#Horizontal White Rect (Long)
 		c = Gosu::Color.argb(0xff_ffffff)
-		x1 = 82 + column * 30
-		y1 = 82 + row * 30
+		x1 = @buffer + column * 30
+		y1 = @buffer + @image_buffer + row * 30
 		x2 = x1 + 29
 		y2 = y1
 		x3 = x2
@@ -170,8 +172,8 @@ class Tile
 
 		#Horizontal White Rect (Short)
 		c = Gosu::Color.argb(0xff_ffffff)
-		x1 = 82 + column * 30
-		y1 = 82 + row * 30
+		x1 = @buffer + column * 30
+		y1 = @buffer + @image_buffer + row * 30
 		x2 = x1 + 28
 		y2 = y1
 		x3 = x2
@@ -181,8 +183,8 @@ class Tile
 		@@window.draw_quad(x1, y1, c, x2, y2, c, x3, y3, c, x4, y4, c, 2)
 
 		#Vertical White Column (Long)
-		x1 = 82 + column * 30
-		y1 = 82 + row * 30
+		x1 = @buffer + column * 30
+		y1 = @buffer + @image_buffer + row * 30
 		x2 = x1 + 1
 		y2 = y1
 		x3 = x2
@@ -192,8 +194,8 @@ class Tile
 		@@window.draw_quad(x1, y1, c, x2, y2, c, x3, y3, c, x4, y4, c, 2)
 
 		#Vertical White Column (Short)
-		x1 = 83 + column * 30
-		y1 = 82 + row * 30
+		x1 = @buffer + 1 + column * 30
+		y1 = @buffer + @image_buffer + row * 30
 		x2 = x1 + 1
 		y2 = y1
 		x3 = x2
@@ -204,8 +206,8 @@ class Tile
 		
 		#Dark Grey Horizontal Rectangle (long)
 		c = Gosu::Color.argb(0xaa626567)
-		x1 = 83 + column * 30
-		y1 = 111 + row * 30
+		x1 = @buffer + 1 + column * 30
+		y1 = @buffer + @image_buffer + 29 + row * 30
 		#point = point + indent
 		x2 = x1 + 29
 		y2 = y1
@@ -216,8 +218,8 @@ class Tile
 		@@window.draw_quad(x1, y1, c, x2, y2, c, x3, y3, c, x4, y4, c, 2)
 
 		#Dark Grey Horizontal Rectangle (Short)
-		x1 = 84 + column * 30
-		y1 = 110 + row * 30
+		x1 = @buffer + 2 + column * 30
+		y1 = @buffer + @image_buffer + 28 + row * 30
 		#point = point + indent
 		x2 = x1 + 28
 		y2 = y1
@@ -228,8 +230,8 @@ class Tile
 		@@window.draw_quad(x1, y1, c, x2, y2, c, x3, y3, c, x4, y4, c, 2)
 
 		#Dark Grey Verticle Rectangle (Long)
-		x1 = 110 + column * 30
-		y1 = 82 + row * 30
+		x1 = @buffer + 28 + column * 30
+		y1 = @buffer + @image_buffer + row * 30
 		#point = point + indent
 		x2 = x1 + 1
 		y2 = y1
@@ -240,8 +242,8 @@ class Tile
 		@@window.draw_quad(x1, y1, c, x2, y2, c, x3, y3, c, x4, y4, c, 2)
 
 		#Dark Grey Horizontal Rectangle (Short)
-		x1 = 111 + column * 30
-		y1 = 83 + row * 30
+		x1 = @buffer + 29 + column * 30
+		y1 = @buffer + @image_buffer + 1 + row * 30
 		#point = point + indent
 		x2 = x1 + 2
 		y2 = y1
@@ -254,8 +256,8 @@ class Tile
 		#Center Light Grey Square
 		
 		c = Gosu::Color.argb(0xffA8A8A8)
-		x1 = 82 + column * 30
-		y1 = 82 + row * 30
+		x1 = @buffer + column * 30
+		y1 = @buffer + @image_buffer + row * 30
 		x2 = x1 + 28
 		y2 = y1
 		x3 = x2
@@ -267,8 +269,8 @@ class Tile
 		#Flag
 		#Pole
 		c = Gosu::Color.argb(0xaa000000)
-		x1 = 90 + column * 30
-		y1 = 88 + row * 30
+		x1 = @buffer + 8 + column * 30
+		y1 = @buffer + @image_buffer + 6 + row * 30
 		x2 = x1 + 2
 		y2 = y1
 		x3 = x2
@@ -279,8 +281,8 @@ class Tile
 
 		#Flag
 		c = Gosu::Color.argb(0xaaFF0000)
-		x1 = 92 + column * 30
-		y1 = 88 + row * 30
+		x1 = @buffer + 10 + column * 30
+		y1 = @buffer + @image_buffer + 6 + row * 30
 		x2 = x1 + 14
 		y2 = y1
 		x3 = x2
@@ -292,8 +294,8 @@ class Tile
 
 	def draw_opened_number(row, column, number)
 		c = Gosu::Color.argb(0xffA8A8A8)
-		x1 = 82 + column * 30
-		y1 = 82 + row * 30
+		x1 = @buffer + column * 30
+		y1 = @buffer + @image_buffer + row * 30
 		x2 = x1 + 29
 		y2 = y1
 		x3 = x2
@@ -331,8 +333,8 @@ class Tile
 	def draw_opened_mine(row,column)
 		#Draws Opened Square
 		c = Gosu::Color.argb(0xffFF0000)
-		x1 = 82 + column * 30
-		y1 = 82 + row * 30
+		x1 = @buffer + column * 30
+		y1 = @buffer + @image_buffer + row * 30
 		x2 = x1 + 29
 		y2 = y1
 		x3 = x2
@@ -344,8 +346,8 @@ class Tile
 		#Mine Rect
 		#Main Square
 		c = Gosu::Color.argb(0xaa000000)
-		x1 = 89	+ column * 30
-		y1 = 89 + row * 30
+		x1 = @buffer + 7 + column * 30
+		y1 = @buffer + @image_buffer + 7 + row * 30
 		x2 = x1 + 14
 		y2 = y1
 		x3 = x2
@@ -355,8 +357,8 @@ class Tile
 		@@window.draw_quad(x1, y1, c, x2, y2, c, x3, y3, c, x4, y4, c, 4)
 
 		#Vertical Black Rect
-		x1 = 87	+ column * 30
-		y1 = 95 + row * 30
+		x1 = @buffer + 5 + column * 30
+		y1 = @buffer + @image_buffer + 13 + row * 30
 		x2 = x1 + 18
 		y2 = y1
 		x3 = x2
@@ -366,8 +368,8 @@ class Tile
 		@@window.draw_quad(x1, y1, c, x2, y2, c, x3, y3, c, x4, y4, c, 4)
 
 		#Horizontal Black Rect
-		x1 = 95	+ column * 30
-		y1 = 87 + row * 30
+		x1 = @buffer + 13 + column * 30
+		y1 = @buffer + @image_buffer + 5 + row * 30
 		x2 = x1 + 2
 		y2 = y1
 		x3 = x2

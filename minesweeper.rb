@@ -4,7 +4,10 @@ require_relative 'game'
 class Minesweeper < Gosu::Window
 
 	def initialize
-		super(460,460)
+		@winSize = 400
+		super(@winSize,@winSize)
+		@buffer = (@winSize - 255) / 2
+		@image_buffer = 30
 		self.caption = "Minesweeper"
 		@game = Game.new(self)
 		@time = 0
@@ -22,7 +25,7 @@ class Minesweeper < Gosu::Window
 
 	def button_up(id)
 		if id == Gosu::MsLeft
-			if(mouse_x > 112 and mouse_x < 326 and mouse_y > 112 and mouse_y < 326)
+			if(mouse_x > @buffer and mouse_x < @winSize - @buffer and mouse_y > @buffer and mouse_y < @winSize - @buffer)
 				if @game.first_move == true
 					@start_time = Gosu::milliseconds
 					@game.handle_left_mouse_up(mouse_x, mouse_y)
@@ -30,7 +33,7 @@ class Minesweeper < Gosu::Window
 				else
 					@game.handle_left_mouse_up(mouse_x, mouse_y) 
 				end
-			elsif (mouse_x > 190 and mouse_x < 250 and mouse_y > 20 and mouse_y < 80)
+			elsif (mouse_x > @winSize / 2 - 30 and mouse_x < @winSize / 2 + 30 and mouse_y > @buffer - @image_buffer and mouse_y < @buffer + @image_buffer)
 				@game = Game.new(self)
 				@clicked = false
 				@start_time = Gosu::milliseconds
@@ -43,16 +46,16 @@ class Minesweeper < Gosu::Window
 
 	def draw
 		@game.draw
-		@timer_font.draw("#{@time.to_s}", 296, 80, 2, 1, 1, 0xff_FF0000)
-		@win_font.draw("You won!", 130, 330, 2) if @game.won == true
+		@timer_font.draw("#{@time.to_s}", @winSize - @buffer - 30, @buffer + @image_buffer, 2, 1, 1, 0xff_FF0000)
+		@win_font.draw("You won!", @winSize / 2 - 15, @winSize - @buffer + @image_buffer, 2) if @game.won == true
 		if @game.over
-			@smile_dead_image.draw(190,20,2)
+			@smile_dead_image.draw(@winSize / 2 - 30, @buffer / 2,2)
 		elsif 
-			@smile_won_image.draw(190,20,2)
+			@smile_won_image.draw(@winSize / 2 - 30, @buffer / 2,2)
 		else
-			@smile_image.draw(190,20,2)	
+			@smile_image.draw(@winSize / 2 - 30, @buffer / 2,2)	
 		end
-		@timer_font.draw("#{@game.flags.to_s}", 112, 80, 2, 1, 1, 0xff_FF0000)
+		@timer_font.draw("#{@game.flags.to_s}", @buffer + 30, @buffer + @image_buffer, 2, 1, 1, 0xff_FF0000)
 	end
 
 	def update
